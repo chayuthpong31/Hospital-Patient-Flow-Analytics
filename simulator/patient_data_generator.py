@@ -38,7 +38,7 @@ def inject_dirty_data(record):
 
     # 5% chance to have future admission timestamp
     if random.random() < 0.05:
-        record["admission_time"] = (datetime.now(timezone.utc) + timedelta(hours=random.randint(1, 72))).isoformat()
+        record["admission_time"] = (datetime.now(timezone.utc) + timedelta(hours=random.randint(1, 72))).replace(tzinfo=None).isoformat()
 
     return record
 
@@ -51,8 +51,8 @@ def generate_patient_event():
         "gender": random.choice(genders),
         "age": random.randint(1, 90),
         "department": random.choice(departments),
-        "admission_time": admission_time.isoformat(),
-        "discharge_time": discharge_time.isoformat(),
+        "admission_time": admission_time.replace(tzinfo=None).isoformat(),
+        "discharge_time": discharge_time.replace(tzinfo=None).isoformat(),
         "bed_id": random.randint(1, 500),
         "hospital_id": random.randint(1, 7) # Assuming 7 hospitals in network
     }
